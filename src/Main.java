@@ -4,7 +4,14 @@ import java.io.*;
 public class Main {
     public static void main(String[] args) {
         String [][] maze = getMaze("src/maze_file");
-        System.out.println(solveDeadEndMaze(maze));
+        for (int i = 0; i < solveDeadEndMaze(maze).size(); i++) {
+            if (i < solveDeadEndMaze(maze).size() - 1) {
+                System.out.print(solveDeadEndMaze(maze).get(i) + " ---> ");
+            }
+            else {
+                System.out.print(solveDeadEndMaze(maze).get(i));
+            }
+        }
 
 
     }
@@ -45,9 +52,9 @@ public class Main {
 
     // solves maze with dead ends
     public static ArrayList<String> solveDeadEndMaze(String [][] maze) {
-        ArrayList<String> path = new ArrayList<>();
+        ArrayList<String> path = new ArrayList<>(); // stores the correct coordinates
         boolean[][] coordsVisited = new boolean[maze.length][maze[0].length];
-        ArrayList<Forks> forks = new ArrayList<>();
+        ArrayList<Forks> forks = new ArrayList<>(); // stores the list of forks encountered
         int x = 0;
         int y = 0;
 
@@ -78,7 +85,7 @@ public class Main {
 
                     if (!coordsVisited[newX][newY] && !moved) {
                         if (directions.size() > 1) {
-                            forks.add(new Forks(x, y)); // Add fork before moving
+                            forks.add(new Forks(x, y)); // add fork before moving
                         }
                         x = newX;
                         y = newY;
