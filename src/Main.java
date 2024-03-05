@@ -20,7 +20,6 @@ public class Main {
         path.add(formatCoordinates(x, y));
         boolean moved = false;
         while (!(x == maze.length - 1 && y == maze[0].length - 1)) {
-
             if (y + 1 < maze[0].length && !coordsVisited[x][y + 1] && maze[x][y + 1].equals(".")) {
                 y++;
                 moved = true;
@@ -57,6 +56,38 @@ public class Main {
         while (!(x == maze.length - 1 && y == maze[0].length - 1)) {
             ArrayList<String> directions = getDirections(maze, coordsVisited, x, y);
             boolean moved = false;
+
+            if (directions.size() == 0) {
+                // backtrack to the last fork
+                Forks lastFork = forks.remove(forks.size() - 1);
+                x = lastFork.getX();
+                y = lastFork.getY();
+                // remove the wrong path taken from the last fork
+                while (!path.get(path.size() - 1).equals(formatCoordinates(x, y))) {
+                    path.remove(path.size() - 1);
+                }
+            }
+            else {
+                for (String direction : directions) {
+                    int newX = x, newY = y;
+
+                    if (direction.equals("up")) newX--;
+                    else if (direction.equals("down")) newX++;
+                    else if (direction.equals("left")) newY--;
+                    else if (direction.equals("right")) newY++;
+
+                    if (!coordsVisited[newX][newY] && !moved) {
+                        if (directions.size() > 1) {
+                            forks.add(new Forks(x, y)); // Add fork before moving
+                        }
+                        x = newX;
+                        y = newY;
+                        coordsVisited[x][y] = true;
+                        path.add(formatCoordinates(x, y));
+                        moved = true;
+                    }
+                }
+            }
 
         }
         return path;
