@@ -4,7 +4,7 @@ import java.io.*;
 public class Main {
     public static void main(String[] args) {
         String [][] m = getMaze("src/maze_file");
-        Maze maze = new Maze(m, 0, 0);
+        Maze maze = new Maze(m, 0, 0); // creates new maze object
         ArrayList<String> coordinates = maze.solveMaze();
         for (int i = 0; i < coordinates.size(); i++) {
             if (i < coordinates.size() - 1) {

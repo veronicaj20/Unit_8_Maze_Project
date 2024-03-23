@@ -56,6 +56,7 @@ public class Maze {
         return dir;
     }
 
+    // new maze solver method
     public ArrayList<String> solveMaze() {
         coordsVisited[x][y] = true;
         correctPath.add(formatCoordinates(x, y));
